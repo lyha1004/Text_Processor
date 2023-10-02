@@ -16,9 +16,9 @@ class Tests(unittest.TestCase):
         self.assertEqual("hello", actual_output)
        
     def test_incorrect_spelling_returns_brackets(self):
-        actual_output = process_file("blah")
+        actual_output = process_file("moln")
 
-        self.assertEqual("[blah]", actual_output)
+        self.assertEqual("[moln]", actual_output)
 
 
 if __name__ == '__main__': 
