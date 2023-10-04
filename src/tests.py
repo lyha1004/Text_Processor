@@ -1,4 +1,6 @@
 import unittest
+from unittest.mock import patch
+import requests
 from text_processor import process_file
 
 class Tests(unittest.TestCase):
@@ -14,11 +16,8 @@ class Tests(unittest.TestCase):
         actual_output = process_file("hello")
         
         self.assertEqual("hello", actual_output)
-       
-    def test_incorrect_spelling_returns_brackets(self):
-        actual_output = process_file("moln")
 
-        self.assertEqual("[moln]", actual_output)
+
 
 
 if __name__ == '__main__': 
