@@ -1,24 +1,24 @@
 import unittest
-from text_processor import Text_Processor
+from text_processor import process_file
+from text_processor import is_valid_word
 
 class Tests(unittest.TestCase):
     def test_canary(self):
         self.assertTrue(True)
 
     def test_empty_string_returns_empty_string(self):
-       text = Text_Processor()
-       actual_output = text.process_file("")
+       valid = is_valid_word(True)
+       actual_output = process_file("", valid)
        self.assertEqual("", actual_output)
 
     def test_hello_returns_hello(self):
-        text = Text_Processor()
-        actual_output = text.process_file("hello")
+        valid = is_valid_word(True)
+        actual_output = process_file("hello", valid)
         self.assertEqual("hello", actual_output)
        
     def test_incorrect_spelling_returns_brackets(self):
-        text = Text_Processor()
-        text.set_valid_word(False)
-        actual_output = text.process_file("blah")
+        valid = is_valid_word(False)
+        actual_output = process_file("blah", valid)
         self.assertEqual("[blah]", actual_output)
 
 

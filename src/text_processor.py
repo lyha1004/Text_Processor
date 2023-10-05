@@ -1,11 +1,7 @@
-class Text_Processor:
-    def __init__(self):
-        self.valid_word = True
+def is_valid_word(valid_word):
+    return valid_word
 
-    def set_valid_word(self, valid_word):
-        self.valid_word = valid_word
-    
-    def process_file(self,text):
-        return text if self.valid_word else f"[{text}]"
+def process_file(text, is_valid_word):
+    return text if is_valid_word else f"[{text}]"
 
 
