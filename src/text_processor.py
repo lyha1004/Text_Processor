@@ -1,8 +1,11 @@
-import requests
+class Text_Processor:
+    def __init__(self):
+        self.valid_word = True
 
-def process_file(text):
-    url = f'http://agilec.cs.uh.edu/spell?check={text}'
-    response = requests.get(url)
-    return f'[{text}]'if response.text == 'false' else text
+    def set_valid_word(self, valid_word):
+        self.valid_word = valid_word
+    
+    def process_file(self,text):
+        return text if self.valid_word else f"[{text}]"
 
 
