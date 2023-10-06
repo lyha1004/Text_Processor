@@ -1,9 +1,6 @@
+from spell_checker import check_spelling
 
-def is_valid_word(valid_word):
-    return True
-
-
-def process_file(text, is_valid_word):
-    return text if is_valid_word(text) else f"[{text}]"
+def process_text(text, check_spelling):
+    return text if check_spelling(text) else f"[{text}]"
 
 

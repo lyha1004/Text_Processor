@@ -1,24 +1,24 @@
 import unittest
 from unittest.mock import patch
-from src.text_processor import process_file
-from src.text_processor import is_valid_word
+from src.text_processor import process_text
+from src.spell_checker import check_spelling
 
 class Tests(unittest.TestCase):
     def test_canary(self):
         self.assertTrue(True)
 
     def test_empty_string_returns_empty_string(self):
-       actual_output = process_file("", is_valid_word)
+       actual_output = process_text("", check_spelling)
        self.assertEqual("", actual_output)
 
     def test_hello_returns_hello(self):
-        actual_output = process_file("hello", is_valid_word)
+        actual_output = process_text("hello", check_spelling)
         self.assertEqual("hello", actual_output)
   
-    @patch('src.text_processor.is_valid_word')
-    def test_incorrect_spelling_returns_brackets(self, mock_is_valid_word):
-        mock_is_valid_word.side_effect = lambda text: False if text == "blah" else True
-        actual_output = process_file("blah", mock_is_valid_word)
+    @patch('src.spell_checker.check_spelling')
+    def test_incorrect_spelling_returns_brackets(self, mock_check_spelling):
+        mock_check_spelling.return_value = False
+        actual_output = process_text("blah", mock_check_spelling)
         self.assertEqual("[blah]", actual_output)
 
 
