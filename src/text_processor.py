@@ -1,11 +1,4 @@
 
 def process_text(text, *check_spelling):
-    result = []
-    words = text.split()
-    for word, check_spelling in zip(words, check_spelling):
-        if check_spelling(word):
-            result.append(word)
-        else:
-            result.append(f"[{word}]")
+    result = [word if check(word) else f"[{word}]" for word, check in zip(text.split(), check_spelling)]
     return " ".join(result)
-
