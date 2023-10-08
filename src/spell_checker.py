@@ -1,2 +1,6 @@
-def check_spelling(valid_word):
-    return True
+dictionary = []
+def check_spelling(word):
+    if word in dictionary:
+      return True
+    else:
+      return False
