@@ -38,19 +38,47 @@ class Tests(unittest.TestCase):
         self.assertEqual("[misp] hello", process_text("misp hello", check_spelling))
 
     def test_hello_tyop_there_misp_returns_two_brackets(self):
-        check_spelling = Mock(side_effect = [True, False, True, False])
+
+        check_spelling =  Mock(side_effect = [word not in ['tyop', 'misp'] for word in "hello tyop there misp".split()])
         
         self.assertEqual("hello [tyop] there [misp]", process_text("hello tyop there misp", check_spelling))
 
     def test_two_lines_returns_two_lines(self):
-        check_spelling = Mock(side_effect = [True, True, True, True])
-        
-        self.assertEqual("line one \n line two", process_text("line one \n line two", check_spelling))
 
-    def test_two_lines_with_incorrect_spellling_returns_two_lines_with_brackets(self):
-        check_spelling = Mock(side_effect = [True, False, False, True])
-        
-        self.assertEqual("cool [ctas] \n [ctue] dogs", process_text("cool ctas \n ctue dogs", check_spelling))
+        text = """line one
+line two"""
+        check_spelling = Mock(return_value = True)
+
+        self.assertEqual(text, process_text(text, check_spelling))
+
+    def test_two_lines_with_incorrect_spelling_returns_two_lines_with_brackets(self):
+        text = """cool ctas
+ctue dogs"""
+
+        check_spelling = Mock(side_effect = [word not in ['ctas', 'ctue'] for word in """cool ctas
+ctue dogs""".split()])
+
+        self.assertEqual("cool [ctas]\n[ctue] dogs", process_text(text, check_spelling))
+
+    def test_three_lines_returns_three_lines(self):
+        text = """line one
+line two
+line three"""
+
+        check_spelling = Mock(return_value = True)
+
+        self.assertEqual(text, process_text(text, check_spelling))
+
+    def test_three_lines_with_incorrect_spelling_returns_correct_results(self):
+        text = """cool ctas
+ctue dogs
+crazy horzes"""
+
+        check_spelling = Mock(side_effect = [word not in ['ctas', 'ctue', 'horzes'] for word in """cool ctas
+ctue dogs
+crazy horzes""".split()])
+
+        self.assertEqual("cool [ctas]\n[ctue] dogs\ncrazy [horzes]", process_text(text, check_spelling))
 
 
 if __name__ == '__main__': 
