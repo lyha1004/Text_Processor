@@ -1,3 +1,7 @@
+SPACE = " "
+
+def process_word(word, check_spelling):
+ return word if check_spelling(word) else f"[{word}]"
+
 def process_text(text, check_spelling):
-    result = [word if check_spelling(word) else f"[{word}]" for word in text.split()]
-    return " ".join(result)
+    return SPACE.join([process_word(word, check_spelling) if word != '\n' else word for word in text.split(SPACE)])
