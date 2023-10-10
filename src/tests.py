@@ -87,7 +87,7 @@ class Tests(unittest.TestCase):
                          [ctue] dogs
                          crazy [horzes]""")
         
-        check_spelling = Mock(side_effect = [word not in ['ctas', 'ctue', 'horzes'] for word in text.split()])
+        check_spelling = Mock(side_effect = lambda word: word not in ['ctas', 'ctue', 'horzes'])
 
         self.assertEqual(expected_result, process_text(text, check_spelling))
 
