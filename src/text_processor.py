@@ -1,5 +1,6 @@
 SPACE = ' '
-LINEBREAK = '\n'
+LINEBREAK = """
+"""
 
 def process_word(word, check_spelling):
  return word if check_spelling(word) else f"[{word}]"
