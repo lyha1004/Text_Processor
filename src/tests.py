@@ -91,6 +91,14 @@ class Tests(unittest.TestCase):
 
         self.assertEqual(expected_result, process_text(text, check_spelling))
 
+    def test_processtext_exception_from_spellchecker(self):
+        text = "hello there how aare you"
+        
+        check_spelling = Mock(side_effect = KeyError('there'))
+        
+        with self.assertRaises(KeyError): process_text(text, check_spelling)
+
+
 if __name__ == '__main__': 
   unittest.main()
        
