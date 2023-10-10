@@ -44,49 +44,52 @@ class Tests(unittest.TestCase):
         
         self.assertEqual("hello [tyop] there [misp]", process_text("hello tyop there misp", check_spelling))
 
+ 
     def test_two_lines_returns_two_lines(self):
+        text = dedent("""\
+            line one
+            line two""")
+        check_spelling = Mock(return_value = True)
 
-                text = """\
-                    line one
-                    line two"""
-                check_spelling = Mock(return_value = True)
-
-                self.assertEqual(dedent(text), process_text(text, check_spelling))
+        self.assertEqual(text, process_text(text, check_spelling))
 
     def test_two_lines_with_incorrect_spelling_returns_two_lines_with_brackets(self):
-        text = """\
+        text = dedent("""\
             cool ctas
-            ctue dogs"""
+            ctue dogs""")
 
+        expected_result = dedent("""\
+                                cool [ctas]
+                                [ctue] dogs""")
+        
         check_spelling = Mock(side_effect = [word not in ['ctas', 'ctue'] for word in text.split()])
 
-        self.assertEqual(dedent("""\
-                                cool [ctas]
-                                [ctue] dogs"""), process_text(text, check_spelling))
+        self.assertEqual(expected_result, process_text(text, check_spelling))
 
     def test_three_lines_returns_three_lines(self):
-        text = """\
+        text = dedent("""\
             line one
             line two
-            line three"""
+            line three""")
 
         check_spelling = Mock(return_value = True)
 
-        self.assertEqual(dedent(text), process_text(text, check_spelling))
+        self.assertEqual(text, process_text(text, check_spelling))
 
     def test_three_lines_with_incorrect_spelling_returns_correct_results(self):
-        text = """\
+        text = dedent("""\
             cool ctas
             ctue dogs
-            crazy horzes"""
+            crazy horzes""")
 
-        check_spelling = Mock(side_effect = [word not in ['ctas', 'ctue', 'horzes'] for word in text.split()])
-
-        self.assertEqual(dedent("""\
+        expected_result = dedent("""\
                          cool [ctas]
                          [ctue] dogs
-                         crazy [horzes]"""), process_text(text, check_spelling))
+                         crazy [horzes]""")
+        
+        check_spelling = Mock(side_effect = [word not in ['ctas', 'ctue', 'horzes'] for word in text.split()])
 
+        self.assertEqual(expected_result, process_text(text, check_spelling))
 
 if __name__ == '__main__': 
   unittest.main()
