@@ -105,14 +105,28 @@ class Tests(unittest.TestCase):
         text = "hello there hwo aare you"
 
         def side_effect_function(word):
-            if word == 'there':
+            if word == 'there' or word == 'aare':
                 raise Exception 
             
-            return word not in ["hwo", "aare"]
+            return word not in ["hwo"]
         
         check_spelling = Mock(side_effect = side_effect_function)
         
-        self.assertEqual("hello ?there? [hwo] [aare] you", process_text(text, check_spelling))
+        self.assertEqual("hello ?there? [hwo] ?aare? you", process_text(text, check_spelling))
+    
+    def test_hi_there_how_are_returns_all_exceptions(self):
+        text = "hi there how are"
+
+        def side_effect_function(word):
+            if word in ["hi", "there", "how", "are"]:
+                raise Exception 
+            
+            return True
+        
+        check_spelling = Mock(side_effect = side_effect_function)
+        
+        self.assertEqual("?hi? ?there? ?how? ?are?", process_text(text, check_spelling))
+
 
         
 if __name__ == '__main__': 
