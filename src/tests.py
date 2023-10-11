@@ -93,8 +93,13 @@ class Tests(unittest.TestCase):
 
     def test_processtext_exception_from_spellchecker(self):
         text = "hello there how aare you"
+
+        def side_effect_function(word):
+            if word == 'there':
+                raise Exception
+            return True
         
-        check_spelling = Mock(side_effect = KeyError('there'), return_value = True)
+        check_spelling = Mock(side_effect = side_effect_function)
         
         self.assertEqual("hello ?there? how aare you", process_text(text, check_spelling))
 

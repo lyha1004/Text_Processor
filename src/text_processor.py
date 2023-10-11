@@ -6,7 +6,7 @@ def process_word(word, check_spelling):
    try:
       if check_spelling(word):
          return word
-   except KeyError:
+   except Exception:
      return f"?{word}?"
    else: 
       return f"[{word}]"
