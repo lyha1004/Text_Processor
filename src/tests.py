@@ -3,7 +3,6 @@ from unittest.mock import Mock
 from textwrap import dedent
 from text_processor import process_text
 
-
 class Tests(unittest.TestCase):
     def test_canary(self):
         self.assertTrue(True)
@@ -39,12 +38,10 @@ class Tests(unittest.TestCase):
         self.assertEqual("[misp] hello", process_text("misp hello", check_spelling))
 
     def test_hello_tyop_there_misp_returns_two_brackets(self):
-
-        check_spelling =  Mock(side_effect = [word not in ['tyop', 'misp'] for word in "hello tyop there misp".split()])
+        check_spelling = Mock(side_effect = lambda word: word not in['tyop', 'misp'] )
         
         self.assertEqual("hello [tyop] there [misp]", process_text("hello tyop there misp", check_spelling))
 
- 
     def test_two_lines_returns_two_lines(self):
         text = dedent("""\
             line one
@@ -61,8 +58,8 @@ class Tests(unittest.TestCase):
         expected_result = dedent("""\
                                 cool [ctas]
                                 [ctue] dogs""")
-        
-        check_spelling = Mock(side_effect = [word not in ['ctas', 'ctue'] for word in text.split()])
+
+        check_spelling = Mock(side_effect = lambda word: word not in ['ctas', 'ctue'])
 
         self.assertEqual(expected_result, process_text(text, check_spelling))
 
@@ -88,22 +85,35 @@ class Tests(unittest.TestCase):
                          crazy [horzes]""")
         
         check_spelling = Mock(side_effect = lambda word: word not in ['ctas', 'ctue', 'horzes'])
-
+        
         self.assertEqual(expected_result, process_text(text, check_spelling))
-
+        
     def test_processtext_exception_from_spellchecker(self):
         text = "hello there how aare you"
 
         def side_effect_function(word):
             if word == 'there':
                 raise Exception
+            
             return True
         
         check_spelling = Mock(side_effect = side_effect_function)
         
         self.assertEqual("hello ?there? how aare you", process_text(text, check_spelling))
 
+    def test_hello_hwo_aare_you_returns_exception_and_wrong_spelling(self):
+        text = "hello there hwo aare you"
 
+        def side_effect_function(word):
+            if word == 'there':
+                raise Exception 
+            
+            return word not in ["hwo", "aare"]
+        
+        check_spelling = Mock(side_effect = side_effect_function)
+        
+        self.assertEqual("hello ?there? [hwo] [aare] you", process_text(text, check_spelling))
+
+        
 if __name__ == '__main__': 
   unittest.main()
-       
