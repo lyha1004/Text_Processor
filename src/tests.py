@@ -94,9 +94,9 @@ class Tests(unittest.TestCase):
     def test_processtext_exception_from_spellchecker(self):
         text = "hello there how aare you"
         
-        check_spelling = Mock(side_effect = KeyError('there'))
+        check_spelling = Mock(side_effect = KeyError('there'), return_value = True)
         
-        with self.assertRaises(KeyError): process_text(text, check_spelling)
+        self.assertEqual("hello ?there? how aare you", process_text(text, check_spelling))
 
 
 if __name__ == '__main__': 
