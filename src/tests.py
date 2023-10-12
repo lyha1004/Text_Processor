@@ -119,7 +119,7 @@ class SpellCheckerTests(unittest.TestCase):
     def test_getResponse_takes_word_returns_response_from_webservice_greater_than_0(self):
         word = "hello"
         response = get_Response(word)
-        self.assertTrue(len(response.text) > 0)
+        self.assertTrue(len(response) > 0)
          
 
     def test_parseText_takes_True_returns_True(self):

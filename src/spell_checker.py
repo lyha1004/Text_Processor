@@ -3,7 +3,7 @@ import requests
 def get_Response(word):
   url = f'http://agilec.cs.uh.edu/spell?check={word}'
   response = requests.get(url)
-  return response
+  return response.text
 
 def parse_Text(response):
   if response == 'true':
