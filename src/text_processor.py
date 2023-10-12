@@ -28,8 +28,7 @@ def parse_Text(response):
       return True
    elif response == 'false':
       return False
-   else:
-      return Exception
+
 
 def check_spelling(word):
    response = get_Response(word)

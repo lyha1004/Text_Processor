@@ -118,7 +118,7 @@ class SpellCheckerTests(unittest.TestCase):
     def test_getResponse_takes_word_returns_response_from_webservice_greater_than_0(self):
         word = "hello"
         response = get_Response(word)
-        self.assertTrue(len(response) > 0)
+        self.assertTrue(len(response.text) > 0)
          
 
     def test_parseText_takes_True_returns_True(self):
@@ -142,7 +142,7 @@ class SpellCheckerTests(unittest.TestCase):
        mock_get_Response.assert_called_once_with(word)
        mock_parse_Text.assert_called_once_with(mock_get_Response.return_value)
 
-       self.assertEqual(mock_parse_Text, result)
+       self.assertEqual(mock_parse_Text.return_value, result)
 
     @patch('text_processor.get_Response' , side_effect = Exception)
     def test_spell_check_throws_Exception_when_getResponse_throws_Exception(self, mock_get_Response):
