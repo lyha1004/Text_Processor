@@ -20,8 +20,8 @@ def process_text(text, check_spelling):
 
 def getResponse(word):
    url = f'http://agilec.cs.uh.edu/spell?check={word}'
-   response = requests.get(url)
-   return response
+   status = requests.get(url).status_code
+   return status == 200
 
 def parseText(getResponse):
    if getResponse == True:

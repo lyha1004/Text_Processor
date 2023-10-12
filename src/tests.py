@@ -116,8 +116,7 @@ class Tests(unittest.TestCase):
     
     def test_getResponse_takes_word_returns_response_from_webservice(self):
         word = "hello"
-
-        self.assertEqual(getResponse(word).status_code, 200)
+        self.assertEqual(getResponse(word), True)
          
 
     def test_parseText_takes_True_returns_True(self):
@@ -128,8 +127,9 @@ class Tests(unittest.TestCase):
        self.assertEqual(False, parseText(False))
 
     def test_spell_check_to_getResponse_to_parseText_returns_response(self):
-       pass
-
+       word = "hello"
+       self.assertEqual(True, check_spelling(word))
+  
     def test_spall_check_throws_Exception_when_getResponse_throws_Exception(self):
         pass
 
