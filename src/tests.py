@@ -128,7 +128,6 @@ class Tests(unittest.TestCase):
        self.assertEqual(False, parseText(False))
 
     def test_spell_check_to_getResponse_to_parseText_returns_response(self):
-        
        pass
 
     def test_spall_check_throws_Exception_when_getResponse_throws_Exception(self):
