@@ -130,11 +130,19 @@ class Tests(unittest.TestCase):
        word = "hello"
        self.assertEqual(True, check_spelling(word))
   
-    def test_spall_check_throws_Exception_when_getResponse_throws_Exception(self):
-        pass
-
-
-
+    def test_spell_check_throws_Exception_when_getResponse_throws_Exception(self):
+        word = "hello"
         
+        def side_effect_function(word):
+            if word == 'hello':
+                raise Exception
+            
+        getResponse = Mock(side_effect = side_effect_function)
+
+        with self.assertRaises(Exception):
+            check_spelling("hello", getResponse)
+
+
+       
 if __name__ == '__main__': 
   unittest.main()
