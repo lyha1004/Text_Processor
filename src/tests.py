@@ -1,4 +1,5 @@
 import unittest
+from unittest.mock import Mock
 from textwrap import dedent
 from text_processor import process_text
 
