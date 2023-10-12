@@ -1,6 +1,6 @@
 import unittest
-from unittest.mock import Mock, patch
-from spell_checker import parse_Text, check_spelling, get_Response
+from unittest.mock import patch
+from src.spell_checker import parse_Text, check_spelling, get_Response
 
 
 class SpellCheckerTests(unittest.TestCase):
