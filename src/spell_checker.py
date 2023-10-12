@@ -13,6 +13,4 @@ def parse_Text(response):
 
 
 def check_spelling(word):
-   response = get_Response(word)
-   parsed_response = parse_Text(response)
-   return parsed_response
+   return parse_Text(get_Response(word))
