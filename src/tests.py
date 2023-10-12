@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import Mock
 from textwrap import dedent
-from text_processor import process_text
+from text_processor import process_text, parseText, check_spelling
 
 class Tests(unittest.TestCase):
     def test_canary(self):
@@ -114,18 +114,23 @@ class Tests(unittest.TestCase):
         
         self.assertEqual("hello ?there? [hwo] ?aare? you", process_text(text, check_spelling))
     
-    def test_hi_there_how_are_returns_all_exceptions(self):
-        text = "hi there how are"
+    def test_getResponse_takes_word_returns_response_from_webservice(self):
 
-        def side_effect_function(word):
-            if word in ["hi", "there", "how", "are"]:
-                raise Exception 
-            
-            return True
+        pass   
+
+    def test_parseText_takes_True_returns_True(self):
+       pass
+
+    def test_parseText_takes_False_returns_False(self):
+       pass
+
+    def test_spell_check_to_getResponse_to_parseText_returns_response(self):
         
-        check_spelling = Mock(side_effect = side_effect_function)
-        
-        self.assertEqual("?hi? ?there? ?how? ?are?", process_text(text, check_spelling))
+       pass
+
+    def test_spall_check_throws_Exception_when_getResponse_throws_Exception(self):
+        pass
+
 
 
         
