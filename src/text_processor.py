@@ -23,8 +23,15 @@ def get_Response(word):
    response = requests.get(url)
    return response
 
-  
+def parse_Text(response):
+   if response == 'true':
+      return True
+   elif response == 'false':
+      return False
+   else:
+      return Exception
 
 def check_spelling(word):
    response = get_Response(word)
-   return response
+   parsed_response = parse_Text(response)
+   return parsed_response

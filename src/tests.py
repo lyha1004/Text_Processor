@@ -1,7 +1,7 @@
 import unittest
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 from textwrap import dedent
-from text_processor import process_text, parseText, check_spelling, getResponse
+from text_processor import process_text, parse_Text, check_spelling, get_Response
 
 class Tests(unittest.TestCase):
     def test_canary(self):
@@ -114,33 +114,42 @@ class Tests(unittest.TestCase):
         
         self.assertEqual("hello ?there? [hwo] ?aare? you", process_text(text, check_spelling))
     
-    def test_getResponse_takes_word_returns_response_from_webservice(self):
+class SpellCheckerTests(unittest.TestCase):
+    def test_getResponse_takes_word_returns_response_from_webservice_greater_than_0(self):
         word = "hello"
-        self.assertEqual(getResponse(word), True)
+        response = get_Response(word)
+        self.assertTrue(len(response) > 0)
          
 
     def test_parseText_takes_True_returns_True(self):
-       self.assertEqual(True, parseText(True))
+  
+       self.assertTrue(parse_Text('true'))
        
 
     def test_parseText_takes_False_returns_False(self):
-       self.assertEqual(False, parseText(False))
+   
+       self.assertFalse(parse_Text('false'))
 
-    def test_spell_check_to_getResponse_to_parseText_returns_response(self):
+    @patch('text_processor.get_Response')
+    @patch('text_processor.parse_Text')
+    def test_spell_check_to_getResponse_to_parseText_returns_response(self, mock_parse_Text, mock_get_Response):
        word = "hello"
-       self.assertEqual(True, check_spelling(word))
-  
-    def test_spell_check_throws_Exception_when_getResponse_throws_Exception(self):
+       mock_get_Response.return_value = 'true'
+       mock_parse_Text.return_value = True
+
+       result = check_spelling(word)
+
+       mock_get_Response.assert_called_once_with(word)
+       mock_parse_Text.assert_called_once_with(mock_get_Response.return_value)
+
+       self.assertEqual(mock_parse_Text, result)
+
+    @patch('text_processor.get_Response' , side_effect = Exception)
+    def test_spell_check_throws_Exception_when_getResponse_throws_Exception(self, mock_get_Response):
         word = "hello"
         
-        def side_effect_function(word):
-            if word == 'hello':
-                raise Exception
-            
-        getResponse = Mock(side_effect = side_effect_function)
-
         with self.assertRaises(Exception):
-            check_spelling("hello", getResponse)
+            check_spelling(word)
 
 
        
