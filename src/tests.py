@@ -121,10 +121,11 @@ class Tests(unittest.TestCase):
          
 
     def test_parseText_takes_True_returns_True(self):
-       pass
+       self.assertEqual(True, parseText(True))
+       
 
     def test_parseText_takes_False_returns_False(self):
-       pass
+       self.assertEqual(False, parseText(False))
 
     def test_spell_check_to_getResponse_to_parseText_returns_response(self):
         

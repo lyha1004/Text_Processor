@@ -11,8 +11,7 @@ def process_word(word, check_spelling):
      return f"?{word}?"
    else: 
       return f"[{word}]"
-
-
+   
 def process_line(line, check_spelling):
    return SPACE.join([process_word(word, check_spelling) for word in line.split()])
 
