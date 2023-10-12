@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import Mock
 from textwrap import dedent
-from text_processor import process_text, parseText, check_spelling
+from text_processor import process_text, parseText, check_spelling, getResponse
 
 class Tests(unittest.TestCase):
     def test_canary(self):
@@ -115,8 +115,10 @@ class Tests(unittest.TestCase):
         self.assertEqual("hello ?there? [hwo] ?aare? you", process_text(text, check_spelling))
     
     def test_getResponse_takes_word_returns_response_from_webservice(self):
+        word = "hello"
 
-        pass   
+        self.assertEqual(getResponse(word).status_code, 200)
+         
 
     def test_parseText_takes_True_returns_True(self):
        pass
