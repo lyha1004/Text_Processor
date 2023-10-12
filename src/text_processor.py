@@ -21,15 +21,15 @@ def process_text(text, check_spelling):
 def getResponse(word):
    url = f'http://agilec.cs.uh.edu/spell?check={word}'
    status = requests.get(url).status_code
-   return status == 200
+   if status == 200:
+      return True
+
 
 def parseText(getResponse):
    if getResponse == True:
       return True
    elif getResponse == False:
       return False
-   else:
-      return Exception
 
 def check_spelling(word):
    response = getResponse(word)

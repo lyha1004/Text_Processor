@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import Mock
 from textwrap import dedent
-from src.text_processor import process_text
+from src.text_processor import process_text, getResponse, parseText, check_spelling
 
 class Tests(unittest.TestCase):
     def test_canary(self):
@@ -87,6 +87,62 @@ class Tests(unittest.TestCase):
         check_spelling = Mock(side_effect = lambda word: word not in ['ctas', 'ctue', 'horzes'])
         
         self.assertEqual(expected_result, process_text(text, check_spelling))
+        
+    def test_processtext_exception_from_spellchecker(self):
+        text = "hello there how aare you"
 
+        def side_effect_function(word):
+            if word == 'there':
+                raise Exception
+            
+            return True
+        
+        check_spelling = Mock(side_effect = side_effect_function)
+        
+        self.assertEqual("hello ?there? how aare you", process_text(text, check_spelling))
+
+    def test_hello_hwo_aare_you_returns_exception_and_wrong_spelling(self):
+        text = "hello there hwo aare you"
+
+        def side_effect_function(word):
+            if word == 'there' or word == 'aare':
+                raise Exception 
+            
+            return word not in ["hwo"]
+        
+        check_spelling = Mock(side_effect = side_effect_function)
+        
+        self.assertEqual("hello ?there? [hwo] ?aare? you", process_text(text, check_spelling))
+    
+    def test_getResponse_takes_word_returns_response_from_webservice(self):
+        word = "hello"
+        self.assertEqual(getResponse(word), True)
+         
+
+    def test_parseText_takes_True_returns_True(self):
+       self.assertEqual(True, parseText(True))
+       
+
+    def test_parseText_takes_False_returns_False(self):
+       self.assertEqual(False, parseText(False))
+
+    def test_spell_check_to_getResponse_to_parseText_returns_response(self):
+       word = "hello"
+       self.assertEqual(True, check_spelling(word))
+  
+    def test_spell_check_throws_Exception_when_getResponse_throws_Exception(self):
+        word = "hello"
+        
+        def side_effect_function(word):
+            if word == 'hello':
+                raise Exception
+            
+        getResponse = Mock(side_effect = side_effect_function)
+
+        with self.assertRaises(Exception):
+            check_spelling("hello", getResponse)
+
+
+       
 if __name__ == '__main__': 
   unittest.main()
