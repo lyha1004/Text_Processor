@@ -131,8 +131,8 @@ class SpellCheckerTests(unittest.TestCase):
    
        self.assertFalse(parse_Text('false'))
 
-    @patch('text_processor.get_Response')
-    @patch('text_processor.parse_Text')
+    @patch('spell_checker.get_Response')
+    @patch('spell_checker.parse_Text')
     def test_spell_check_to_getResponse_to_parseText_returns_response(self, mock_parse_Text, mock_get_Response):
        word = "hello"
        mock_get_Response.return_value = 'true'
@@ -145,7 +145,7 @@ class SpellCheckerTests(unittest.TestCase):
 
        self.assertEqual(mock_parse_Text.return_value, result)
 
-    @patch('text_processor.get_Response' , side_effect = Exception)
+    @patch('spell_checker.get_Response' , side_effect = Exception)
     def test_spell_check_throws_Exception_when_getResponse_throws_Exception(self, mock_get_Response):
         word = "hello"
         
