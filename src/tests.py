@@ -4,7 +4,7 @@ from textwrap import dedent
 from text_processor import process_text
 from spell_checker import parse_Text, check_spelling, get_Response
 
-class Tests(unittest.TestCase):
+class TextProcessorTests(unittest.TestCase):
     def test_canary(self):
         self.assertTrue(True)
 

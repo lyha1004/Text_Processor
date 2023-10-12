@@ -11,7 +11,6 @@ def parse_Text(response):
    elif response == 'false':
       return False
 
-
 def check_spelling(word):
    response = get_Response(word)
    parsed_response = parse_Text(response)
