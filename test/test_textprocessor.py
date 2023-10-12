@@ -1,7 +1,8 @@
 import unittest
 from unittest.mock import Mock, patch
 from textwrap import dedent
-from src.text_processor import process_text, get_Response, parse_Text, check_spelling
+from src.text_processor import process_text 
+from src.spell_checker import get_Response, parse_Text, check_spelling
 
 class TextProcessorTests(unittest.TestCase):
     def test_canary(self):
