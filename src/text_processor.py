@@ -18,20 +18,13 @@ def process_line(line, check_spelling):
 def process_text(text, check_spelling): 
    return LINEBREAK.join([process_line(line, check_spelling) for line in text.splitlines()])
 
-def getResponse(word):
+def get_Response(word):
    url = f'http://agilec.cs.uh.edu/spell?check={word}'
-   status = requests.get(url).status_code
-   if status == 200:
-      return True
+   response = requests.get(url)
+   return response
 
-
-def parseText(getResponse):
-   if getResponse == True:
-      return True
-   elif getResponse == False:
-      return False
+  
 
 def check_spelling(word):
-   response = getResponse(word)
-   parsed_response = parseText(response)
-   return parsed_response
+   response = get_Response(word)
+   return response

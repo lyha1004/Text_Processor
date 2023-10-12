@@ -3,7 +3,7 @@ from unittest.mock import Mock
 from textwrap import dedent
 from src.text_processor import process_text, getResponse, parseText, check_spelling
 
-class Tests(unittest.TestCase):
+class TextProcessorTests(unittest.TestCase):
     def test_canary(self):
         self.assertTrue(True)
 
@@ -113,7 +113,8 @@ class Tests(unittest.TestCase):
         check_spelling = Mock(side_effect = side_effect_function)
         
         self.assertEqual("hello ?there? [hwo] ?aare? you", process_text(text, check_spelling))
-    
+
+class SpellCheckerTests(unittest.TestCase):
     def test_getResponse_takes_word_returns_response_from_webservice(self):
         word = "hello"
         self.assertEqual(getResponse(word), True)
