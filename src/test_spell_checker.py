@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import Mock, patch
+from unittest.mock import patch
 from spell_checker import parse_Text, check_spelling, get_Response
 
 
