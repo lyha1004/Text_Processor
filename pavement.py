@@ -23,7 +23,7 @@ def test():
 @task
 def run():
     file_name = "sample.txt"
-    command = f"python src/console_UI.py input_files/{file_name}"
+    command = f"python src/console_UI.py < 'input_files/sample.txt'"
     sh(command)
 
 @task
