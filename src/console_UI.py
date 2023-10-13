@@ -8,7 +8,7 @@ from spell_checker import check_spelling
 import sys
 
 def read_file(file_name):
-    with open(f"input_files/{file_name}", "r") as file: 
+    with open(f"src/input_files/{file_name}", "r") as file: 
         text = file.read()
         return text
 
