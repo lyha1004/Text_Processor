@@ -15,9 +15,15 @@ def setup():
 
 @task
 def test():
-    sh('python -m coverage run --source src -m unittest discover -s test')
+    sh('python -m coverage run --source src --omit src/console_UI.py -m unittest discover -s test')
     sh('python -m coverage html')
     sh('python -m coverage report --show-missing')
+
+@task
+def run():
+    file_name = "sample.txt"
+    command = f"python src/console_UI.py {file_name}"
+    sh(command)
 
 @task
 def clean():
