@@ -23,8 +23,9 @@ def test():
 @task
 def run():
     file_name = "sample.txt"
-    command = f"python src/console_UI.py < 'input_files/sample.txt'"
+    command = f"echo {file_name}| python src/console_UI.py"
     sh(command)
+
 
 @task
 def clean():
