@@ -6,6 +6,7 @@ import os
 import glob
 import shutil
 import sys
+import subprocess
 
 sys.path.append(os.path.dirname(__file__))
 
@@ -22,7 +23,7 @@ def test():
 @task
 def run():
     file_name = "sample.txt"
-    command = f"python src/console_UI.py {file_name}"
+    command = f"python src/console_UI.py input_files/{file_name}"
     sh(command)
 
 @task
